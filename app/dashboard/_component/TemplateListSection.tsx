@@ -1,7 +1,7 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Templates from "@/app/(data)/Template";
 import TemplateCard from "./TemplateCard";
-
 export interface Template {
   name: string;
   desc: string;
@@ -19,13 +19,24 @@ export interface Form {
   required?: boolean;
 }
 
-function TemplateListSection() {
+function TemplateListSection({ userSearchInput }: any) {
+  const [templateList, setTemplateList] = useState(Templates);
+  useEffect(() => {
+    if (userSearchInput) {
+      const filterData = templateList.filter((item) =>
+        item.name.toLowerCase().includes(userSearchInput.toLowerCase())
+      );
+      setTemplateList(filterData);
+    } else {
+      setTemplateList(Templates);
+    }
+  }, [userSearchInput]);
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-10">
-      {Templates.map((item: Template, index: number) => (
-        <TemplateCard key={index} {...item} />
-      ))}
-    </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-10">
+        {templateList.map((item: Template, index: number) => (
+          <TemplateCard key={index} {...item} />
+        ))}
+      </div>
   );
 }
 
