@@ -34,7 +34,7 @@ function Sidebar() {
   }, []);
 
   return (
-    <div className="h-screen border p-5 shadow-sm">
+    <div className="h-screen border p-5 shadow-sm bg-white">
       <div className="flex justify-center">
         <Image src={"/logo.svg"} alt="Logo" width={120} height={100} />
       </div>

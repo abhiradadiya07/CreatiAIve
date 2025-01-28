@@ -4,7 +4,7 @@ import React from "react";
 
 function Header() {
   return (
-    <div className="border-b-2 shadow-md p-5 flex justify-between items-center">
+    <div className="border-b-2 shadow-md p-5 flex justify-between items-center  bg-white">
       <div className="flex gap-2 w-[40%] items-center p-2 rounded-md border">
         <Search className="mx-2" />
         <Input placeholder="Search..." className="outline-none" />
