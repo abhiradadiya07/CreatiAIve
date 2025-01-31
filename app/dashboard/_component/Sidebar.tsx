@@ -30,7 +30,7 @@ function Sidebar() {
 
   const path = usePathname();
   useEffect(() => {
-    console.log(path);
+    // console.log(path);
   }, []);
 
   return (

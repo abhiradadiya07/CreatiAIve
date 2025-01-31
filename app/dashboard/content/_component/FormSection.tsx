@@ -6,15 +6,19 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Loader2Icon } from "lucide-react";
 
 interface Props {
   selectedTemplate?: Template;
+  userFormInput: any;
+  loading: boolean;
 }
 
-function FormSection({ selectedTemplate }: Props) {
+function FormSection({ selectedTemplate, userFormInput, loading }: Props) {
   const [formData, setFormData] = useState<any>();
   const onSubmit = (e: any) => {
     e.preventDefault();
+    userFormInput(formData);
   };
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -30,7 +34,7 @@ function FormSection({ selectedTemplate }: Props) {
       <p className="text-gray-500 text-sm">{selectedTemplate?.desc}</p>
       <form className="mt-6" onSubmit={onSubmit}>
         {selectedTemplate?.form?.map((item, index) => (
-          <div className="my-2 flex flex-col gap-2 mb-7">
+          <div className="my-2 flex flex-col gap-2 mb-7" key={index}>
             <Label className="font-bold">{item.label}</Label>
             {item.field == "input" ? (
               <Input
@@ -47,7 +51,8 @@ function FormSection({ selectedTemplate }: Props) {
             ) : null}
           </div>
         ))}
-        <Button type="submit" className="w-full py-6">
+        <Button type="submit" className="w-full py-6" disabled={loading}>
+          {loading && <Loader2Icon className="animate-spin" />}
           Generate Content
         </Button>
       </form>
