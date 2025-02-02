@@ -19,7 +19,10 @@ function OutputSection({ aiOutput }: Props) {
     <div className="bg-white shadow-lg border">
       <div className="flex justify-between items-center p-5">
         <h2 className="font-bold text-lg">Your Result </h2>
-        <Button className="flex gap-2">
+        <Button
+          className="flex gap-2"
+          onClick={() => navigator.clipboard.writeText(aiOutput)}
+        >
           <Copy className="w-4 h-4" />
           Copy
         </Button>
@@ -30,9 +33,6 @@ function OutputSection({ aiOutput }: Props) {
         initialEditType="wysiwyg"
         height="600px"
         useCommandShortcut={true}
-        // onChange={() =>
-        //   console.log(editorRef.current.getInstance().getMarkDown())
-        // }
       />
     </div>
   );
