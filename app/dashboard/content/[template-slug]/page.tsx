@@ -13,8 +13,9 @@ import { AIOutput } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import { TotalUsageContext } from "@/app/(context)/TotalUsageContext";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { UserSubscriptionContext } from "@/app/(context)/UserSubscriptionContext";
+import { UpdateCreditContext } from "@/app/(context)/UpdateCreditContext";
 interface ParamsType {
   "template-slug": string;
 }
@@ -30,6 +31,7 @@ function CreateNewContent(props: Props) {
   const { user } = useUser();
   const { totalUsage, setTotalUsage } = useContext(TotalUsageContext);
   const { userSubscription } = useContext(UserSubscriptionContext);
+  const { setCreditUsage } = useContext(UpdateCreditContext);
   const router = useRouter();
   const selectedTemplate: Template | undefined = Templates?.find(
     (item) => item.slug === params["template-slug"]
@@ -51,10 +53,11 @@ function CreateNewContent(props: Props) {
       result?.response.text()
     );
     setLoading(false);
+    setCreditUsage(Date.now());
   };
 
   const saveInDb = async (formData: any, slug: any, aiResp: string) => {
-    const result = await db.insert(AIOutput).values({
+    await db.insert(AIOutput).values({
       formData: formData,
       templateSlug: slug,
       aiResponse: aiResp,

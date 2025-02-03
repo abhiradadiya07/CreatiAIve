@@ -65,103 +65,106 @@ function History() {
     return <div>Error: {error}</div>;
   }
   return (
-    <div className="bg-white border rounded-2xl m-6 p-6">
-      <h1 className="font-bold text-5xl">History</h1>
-      <div className="text-gray-700 mt-3 text-md">
-        Search your previously generate AI content.
-      </div>
-      <div className="mt-6 hidden lg:block">
-        <table className="min-w-full bg-white border-2 border-gray-200">
-          <thead>
-            <tr className="bg-gray-200 *:py-4 *:px-5 border-b-2 text-left text-lg">
-              <th>Template</th>
-              <th>AI Response</th>
-              <th>Date</th>
-              <th>Words</th>
-              <th>Copy</th>
-            </tr>
-          </thead>
-          <tbody>
-            {historyList.map((item, index) => {
-              const template = GetTemplateName(item.templateSlug);
-              return (
-                <tr key={index} className="*:py-3 *:px-4 border-b-2">
-                  <td>
-                    {template ? (
-                      <div className="flex items-center gap-2">
-                        <Image
-                          src={template.icon}
-                          alt={template.name}
-                          width={40}
-                          height={40}
-                        />
-                        <div className="text-lg">{template.name}</div>
+    <div>
+      <div className="bg-white border rounded-2xl mx-6 p-6">
+        <h1 className="font-bold text-5xl mt-4">History</h1>
+        <div className="text-gray-700 mt-3 text-md">
+          Search your previously generate AI content.
+        </div>
+        <div className="mt-6 hidden lg:block">
+          <table className="min-w-full bg-white border-2 border-gray-200">
+            <thead>
+              <tr className="bg-gray-200 *:py-4 *:px-5 border-b-2 text-left text-lg">
+                <th>Template</th>
+                <th>AI Response</th>
+                <th>Date</th>
+                <th>Words</th>
+                <th>Copy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {historyList.map((item, index) => {
+                const template = GetTemplateName(item.templateSlug);
+                return (
+                  <tr key={index} className="*:py-3 *:px-4 border-b-2">
+                    <td>
+                      {template ? (
+                        <div className="flex items-center gap-2">
+                          <Image
+                            src={template.icon}
+                            alt={template.name}
+                            width={40}
+                            height={40}
+                          />
+                          <div className="text-lg">{template.name}</div>
+                        </div>
+                      ) : (
+                        "Unknown template"
+                      )}
+                    </td>
+                    <td>
+                      <div className="whitespace-pre-wrap">
+                        {item.aiResponse || "No response"}
                       </div>
-                    ) : (
-                      "Unknown template"
+                    </td>
+                    <td>{item.createdAt}</td>
+                    <td>
+                      {item.aiResponse
+                        ? item.aiResponse.split(/\s+/).length
+                        : 0}
+                    </td>
+                    <td>
+                      <Button onClick={() => handleCopy(item.aiResponse || "")}>
+                        Copy
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div className="mt-6 block lg:hidden">
+          {historyList.map((item) => {
+            const template = GetTemplateName(item.templateSlug);
+            return (
+              <div
+                key={item.id}
+                className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    {template && (
+                      <img
+                        src={template.icon}
+                        alt={template.name}
+                        className="w-6 h-6 mr-2"
+                      />
                     )}
-                  </td>
-                  <td>
-                    <div className="whitespace-pre-wrap">
-                      {item.aiResponse || "No response"}
-                    </div>
-                  </td>
-                  <td>{item.createdAt}</td>
-                  <td>
+                    <span className="font-semibold">
+                      {template ? template.name : "Unknown Template"}
+                    </span>
+                  </div>
+                  <Button onClick={() => handleCopy(item.aiResponse || "")}>
+                    Copy
+                  </Button>
+                </div>
+                <div className="mt-3 text-sm text-gray-700">
+                  <div className="whitespace-pre-wrap">
+                    {item.aiResponse || "No response"}
+                  </div>
+                </div>
+                <div className="mt-3 flex justify-between text-sm text-gray-600">
+                  <span>Date: {item.createdAt}</span>
+                  <span>
+                    Words:{" "}
                     {item.aiResponse ? item.aiResponse.split(/\s+/).length : 0}
-                  </td>
-                  <td>
-                    <Button onClick={() => handleCopy(item.aiResponse || "")}>
-                      Copy
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="mt-6 block lg:hidden">
-        {historyList.map((item) => {
-          const template = GetTemplateName(item.templateSlug);
-          return (
-            <div
-              key={item.id}
-              className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  {template && (
-                    <img
-                      src={template.icon}
-                      alt={template.name}
-                      className="w-6 h-6 mr-2"
-                    />
-                  )}
-                  <span className="font-semibold">
-                    {template ? template.name : "Unknown Template"}
                   </span>
                 </div>
-                <Button onClick={() => handleCopy(item.aiResponse || "")}>
-                  Copy
-                </Button>
               </div>
-              <div className="mt-3 text-sm text-gray-700">
-                <div className="whitespace-pre-wrap">
-                  {item.aiResponse || "No response"}
-                </div>
-              </div>
-              <div className="mt-3 flex justify-between text-sm text-gray-600">
-                <span>Date: {item.createdAt}</span>
-                <span>
-                  Words:{" "}
-                  {item.aiResponse ? item.aiResponse.split(/\s+/).length : 0}
-                </span>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );

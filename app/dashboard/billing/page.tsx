@@ -33,14 +33,12 @@ const BillingPage = () => {
       name: "CreatiAIve",
       description: "Monthly Subscription",
       handler: async (resp: any) => {
-        console.log(resp, "=======================");
         if (resp) {
           saveSubscription(resp?.razorpay_payment_id);
         }
         setLoading(false);
       },
     };
-    console.log(options, "_____________________________");
 
     const rzp = new window.Razorpay(options);
     rzp.open();

@@ -32,11 +32,11 @@ function TemplateListSection({ userSearchInput }: any) {
     }
   }, [userSearchInput]);
   return (
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-10">
-        {templateList.map((item: Template, index: number) => (
-          <TemplateCard key={index} {...item} />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-10">
+      {templateList.map((item: Template, index: number) => (
+        <TemplateCard key={index} {...item} />
+      ))}
+    </div>
   );
 }
 

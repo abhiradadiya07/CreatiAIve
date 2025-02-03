@@ -7,19 +7,23 @@ import { HistoryList } from "../history/page";
 import { eq } from "drizzle-orm";
 import { TotalUsageContext } from "@/app/(context)/TotalUsageContext";
 import { UserSubscriptionContext } from "@/app/(context)/UserSubscriptionContext";
+import { UpdateCreditContext } from "@/app/(context)/UpdateCreditContext";
 
 function UsageTrack() {
   const { user } = useUser();
   const [maxWords, setMaxWord] = useState<any>(10000);
   const { totalUsage, setTotalUsage } = useContext(TotalUsageContext);
-  const { userSubscription, setUserSubscription } = useContext(
-    UserSubscriptionContext
-  );
+  const { setUserSubscription } = useContext(UserSubscriptionContext);
+  const { creditUsage, setCreditUsage } = useContext(UpdateCreditContext);
 
   useEffect(() => {
     user && getData();
     user && IsUserSubscribe();
   }, [user]);
+
+  useEffect(() => {
+    user && getData();
+  }, [creditUsage && user]);
 
   const getData = async () => {
     const result: HistoryList[] = await db
