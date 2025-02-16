@@ -29,7 +29,9 @@ function UsageTrack() {
     const result: HistoryList[] = await db
       .select()
       .from(AIOutput)
-      .where(eq(AIOutput.createdBy, user?.primaryEmailAddress?.emailAddress));
+      .where(
+        eq(AIOutput.createdBy, user?.primaryEmailAddress?.emailAddress ?? "")
+      );
     GetTotalUsage(result);
   };
 
@@ -46,7 +48,10 @@ function UsageTrack() {
       .select()
       .from(UserSubscription)
       .where(
-        eq(UserSubscription.email, user?.primaryEmailAddress?.emailAddress)
+        eq(
+          UserSubscription.email,
+          user?.primaryEmailAddress?.emailAddress ?? ""
+        )
       );
     if (result.length > 0) {
       setUserSubscription(true);

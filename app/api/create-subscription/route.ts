@@ -14,5 +14,5 @@ export async function POST(req: NextRequest) {
     notes: { key1: "Note" },
   });
   console.log("🚀 ~ POST ~ result:", result);
-  return NextResponse.json(result);
+  return NextResponse.json(result, { status: 200 });
 }

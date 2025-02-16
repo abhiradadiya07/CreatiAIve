@@ -1,4 +1,3 @@
-// app/api/history/route.ts
 import { db } from "@/utils/db";
 import { AIOutput } from "@/utils/schema";
 import { eq } from "drizzle-orm";
@@ -19,7 +18,9 @@ export async function GET() {
     const historyList = await db
       .select()
       .from(AIOutput)
-      .where(eq(AIOutput.createdBy, user.primaryEmailAddress?.emailAddress));
+      .where(
+        eq(AIOutput.createdBy, user.primaryEmailAddress?.emailAddress ?? "")
+      );
 
     return NextResponse.json(
       { success: true, data: historyList },

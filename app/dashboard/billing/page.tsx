@@ -40,7 +40,7 @@ const BillingPage = () => {
       },
     };
 
-    const rzp = new window.Razorpay(options);
+    const rzp = new (window as any).Razorpay(options);
     rzp.open();
   };
 
