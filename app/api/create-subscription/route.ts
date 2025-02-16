@@ -1,9 +1,6 @@
-// create-subscription
-
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import Razorpay from "razorpay";
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
   let instance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID!,
     key_secret: process.env.RAZORPAY_KEY_SECRET,
